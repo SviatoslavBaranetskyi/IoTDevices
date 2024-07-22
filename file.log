@@ -1,0 +1,13 @@
+2024-07-23 00:15:35.572 | INFO     | __main__:get_all_devices:13 - Fetching all devices
+2024-07-23 00:18:01.907 | INFO     | __main__:create_api_user:20 - Creating API user with data: {'name': 'John Doe', 'email': 'john.doe@example.com', 'password': 'securepassword'}
+2024-07-23 00:18:01.929 | ERROR    | __main__:create_api_user:34 - Error creating API user: duplicate key value violates unique constraint "apiuser_email"
+DETAIL:  Key (email)=(john.doe@example.com) already exists.
+
+2024-07-23 00:18:22.873 | INFO     | __main__:create_api_user:20 - Creating API user with data: {'name': 'John Doe', 'email': 'john2.doe@example.com', 'password': 'securepassword'}
+2024-07-23 00:18:22.878 | INFO     | __main__:create_api_user:27 - API user created: 3
+2024-07-23 00:19:47.812 | INFO     | __main__:create_location:40 - Creating location with data: {'name': 'Lviv'}
+2024-07-23 00:19:47.820 | ERROR    | __main__:create_location:49 - Error creating location: duplicate key value violates unique constraint "location_name"
+DETAIL:  Key (name)=(Lviv) already exists.
+
+2024-07-23 00:20:05.038 | INFO     | __main__:create_location:40 - Creating location with data: {'name': 'Kyiv'}
+2024-07-23 00:20:05.042 | INFO     | __main__:create_location:43 - Location created: 3
