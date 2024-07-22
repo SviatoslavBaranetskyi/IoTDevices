@@ -70,13 +70,31 @@ async def update_device(request):
 
     try:
         device = Device.get(Device.id == device_id)
+
         device.name = data.get('name', device.name)
         device.type = data.get('type', device.type)
         device.password = data.get('password', device.password)
-        device.location = data.get('location_id', device.location.id)
-        device.api_user = data.get('api_user_id', device.api_user.id)
+
+        location_id = data.get('location_id')
+        if location_id:
+            try:
+                location = Location.get(Location.id == location_id)
+                device.location = location
+            except Location.DoesNotExist:
+                return web.json_response({'error': 'Location not found'}, status=404)
+
+        api_user_id = data.get('api_user_id')
+        if api_user_id:
+            try:
+                api_user = APIUser.get(APIUser.id == api_user_id)
+                device.api_user = api_user
+            except APIUser.DoesNotExist:
+                return web.json_response({'error': 'API user not found'}, status=404)
+
+        # Сохраняем изменения в базе данных
         device.save()
 
+        # Возвращаем обновленное устройство
         return web.json_response(serialize_device(device))
     except Device.DoesNotExist:
         return web.json_response({'error': 'Device not found'}, status=404)
@@ -103,10 +121,15 @@ async def init_app():
     app.router.add_post('/api_users', create_api_user)
     app.router.add_post('/locations', create_location)
 
-    db.connect()
+    if db.is_closed():
+        db.connect()
 
     return app
 
+
+async def close_db():
+    if not db.is_closed():
+        db.close()
 
 if __name__ == '__main__':
     app = init_app()
