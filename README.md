@@ -32,7 +32,7 @@ Content-Type: application/json<br>
 &nbsp;&nbsp;&nbsp;"email": "john.doe@example.com",<br>
 &nbsp;&nbsp;&nbsp;"password": "securepassword"<br>
 }
-## Devices:
+## Devices
 - Retrieve all devices<br>
 GET /devices
 - Create a device<br>
