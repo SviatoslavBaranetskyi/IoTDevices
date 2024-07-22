@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dbpass
+      POSTGRES_DB: IoTDevices
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  web:
+    build: .
+    command: python app.py
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: IoTDevices
+      DB_USER: postgres
+      DB_PASS: dbpass
+
+volumes:
+  postgres_data:
